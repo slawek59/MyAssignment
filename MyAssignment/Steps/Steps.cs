@@ -1,4 +1,5 @@
-﻿using MyAssignment.Pages;
+﻿using MyAssignment.Models;
+using MyAssignment.Pages;
 using OpenQA.Selenium;
 
 namespace MyAssignment.Steps
@@ -9,8 +10,8 @@ namespace MyAssignment.Steps
 		{
 			LoginPage loginPage = new LoginPage(driver);
 			loginPage.OpenPage();
-			loginPage.GetUsernameAreaElement().SendKeys("any");
-			loginPage.GetPasswordAreaElement().SendKeys("any");
+			loginPage.GetUsernameAreaElement().SendKeys(User.InvalidUsername);
+			loginPage.GetPasswordAreaElement().SendKeys(User.InvalidPassword);
 			loginPage.ClearInput("Username");
 			loginPage.ClearInput("Password");
 			loginPage.GetLoginButton().Click();
@@ -21,8 +22,8 @@ namespace MyAssignment.Steps
 		{
 			LoginPage loginPage = new LoginPage(driver);
 			loginPage.OpenPage();
-			loginPage.GetUsernameAreaElement().SendKeys("invalid_username");
-			loginPage.GetPasswordAreaElement().SendKeys("secret_sauce");
+			loginPage.GetUsernameAreaElement().SendKeys(User.InvalidUsername);
+			loginPage.GetPasswordAreaElement().SendKeys(User.ValidPassword);
 			loginPage.ClearInput("Password");
 			loginPage.GetLoginButton().Click();
 			return loginPage;
@@ -32,8 +33,8 @@ namespace MyAssignment.Steps
 		{
 			LoginPage loginPage = new LoginPage(driver);
 			loginPage.OpenPage();
-			loginPage.GetUsernameAreaElement().SendKeys("standard_user");
-			loginPage.GetPasswordAreaElement().SendKeys("secret_sauce");
+			loginPage.GetUsernameAreaElement().SendKeys(User.ValidUsername);
+			loginPage.GetPasswordAreaElement().SendKeys(User.ValidPassword);
 			loginPage.GetLoginButton().Click();
 			return loginPage;
 		}

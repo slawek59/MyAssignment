@@ -5,7 +5,7 @@ using OpenQA.Selenium.Firefox;
 
 namespace MyAssignment.Driver
 {
-	public class DriverInstance
+	public static class DriverInstance
 	{
 		public static IWebDriver GetInstance(string browser = "")
 		{
