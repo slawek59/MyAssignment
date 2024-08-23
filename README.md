@@ -12,6 +12,8 @@ UC-3 Test Login form with credentials by passing Username & Password: Type crede
 
 - Parametrized and parallel testing;
 - Supports multiple browsers (Chrome as default, Firefox, Edge);
+- Using Selenium;
 - Using MSTests;
-- Using Fluent Assertions.
+- Using Fluent Assertions;
+- Following Page Object Model design pattern.
   
