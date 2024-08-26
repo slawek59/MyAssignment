@@ -1,6 +1,7 @@
 using FluentAssertions;
 using MyAssignment.Driver;
 using MyAssignment.Logger;
+using MyAssignment.Models;
 using MyAssignment.Pages;
 using OpenQA.Selenium;
 [assembly: Parallelize(Workers = 0, Scope = ExecutionScope.MethodLevel)]
@@ -12,6 +13,7 @@ namespace MyAssignment.Tests
 	{
 		private static NLog.Logger _logger;
 		private string? _browser;
+		private IWebDriver _driver;
 
 		[TestInitialize]
 		public void TestInitialize()
@@ -28,24 +30,20 @@ namespace MyAssignment.Tests
 			_logger.Info($"{LoggerMessages.AppOpenedLoggerMessage} Browser: {browser}");
 			_browser = browser;
 
-			IWebDriver driver = DriverInstance.GetInstance(browser);
+			_driver = DriverInstance.GetInstance(browser);
 
 			Steps.Steps steps = new Steps.Steps();
 
-			LoginPage loginPage = steps.LoginWithClearedInputs(driver);
+			LoginPage loginPage = steps.LoginWithClearedInputs(_driver);
 			string errorMessage = loginPage.GetLoginErrorMessage();
+			string expectedUsernameMessage = ExpectedValues.ExpectedUsernameMissingMessage;
 
-			driver.Quit();
+			if (!errorMessage.Equals(expectedUsernameMessage))
+			{
+				_logger.Error($"{LoggerMessages.UsernameMissingLoggerMessage}{errorMessage}");
+			}
 
-			try
-			{
-				errorMessage.Should().Be("Username is required");
-			}
-			catch (Exception ex)
-			{
-				_logger.Error(ex);
-				throw;
-			}
+			errorMessage.Should().Be(expectedUsernameMessage);
 		}
 
 		[TestMethod]
@@ -57,24 +55,20 @@ namespace MyAssignment.Tests
 			_logger.Info($"{LoggerMessages.AppOpenedLoggerMessage} Browser: {browser}");
 			_browser = browser;
 
-			IWebDriver driver = DriverInstance.GetInstance(browser);
+			_driver = DriverInstance.GetInstance(browser);
 
 			Steps.Steps steps = new Steps.Steps();
 
-			LoginPage loginPage = steps.LoginWithClearedPassword(driver);
+			LoginPage loginPage = steps.LoginWithClearedPassword(_driver);
 			string errorMessage = loginPage.GetLoginErrorMessage();
+			string expectedPasswordMessage = ExpectedValues.ExpectedPasswordMissingMessage;
 
-			driver.Quit();
+			if (!errorMessage.Equals(expectedPasswordMessage))
+			{
+				_logger.Error($"{LoggerMessages.PasswordMissingLoggerMessage}{errorMessage}");
+			}
 
-			try
-			{
-				errorMessage.Should().Be("Password is required");
-			}
-			catch (Exception ex)
-			{
-				_logger.Error(ex);
-				throw;
-			}
+			errorMessage.Should().Be(expectedPasswordMessage);
 		}
 
 		[TestMethod]
@@ -86,31 +80,28 @@ namespace MyAssignment.Tests
 			_logger.Info($"{LoggerMessages.AppOpenedLoggerMessage} Browser: {browser}");
 			_browser = browser;
 
-			IWebDriver driver = DriverInstance.GetInstance(browser);
+			_driver = DriverInstance.GetInstance(browser);
 
 			Steps.Steps steps = new Steps.Steps();
 
-			steps.Login(driver);
+			steps.Login(_driver);
 
-			MainPage mainPage = new MainPage(driver);
+			MainPage mainPage = new MainPage(_driver);
 			string title = mainPage.GetTitleElement();
+			string expectedTitle = ExpectedValues.ExpectedTitle;
 
-			driver.Quit();
+			if (!title.Equals(expectedTitle))
+			{
+				_logger.Error($"{LoggerMessages.WrongTitleLoggerMessage}{title}");
+			}
 
-			try
-			{
-				title.Should().Be("Swag Labs");
-			}
-			catch (Exception ex)
-			{
-				_logger.Error(ex);
-				throw;
-			}
+			title.Should().Be(expectedTitle);
 		}
 
 		[TestCleanup]
 		public void TestCleanup()
 		{
+			_driver.Quit();
 			_logger.Info($"{LoggerMessages.AppClosedLoggerMessage} Browser: {_browser}");
 		}
 	}
