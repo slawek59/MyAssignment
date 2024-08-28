@@ -14,28 +14,24 @@ namespace MyAssignment.Driver
 			{
 				case "Chrome":
 					driver = new ChromeDriver();
-					driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
-					driver.Manage().Window.Maximize();
 					break;
 
 				case "Edge":
 					driver = new EdgeDriver();
-					driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
-					driver.Manage().Window.Maximize();
 					break;
 
 				case "Firefox":
 					driver = new FirefoxDriver();
-					driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
-					driver.Manage().Window.Maximize();
 					break;
 
 				default:
 					driver = new ChromeDriver();
-					driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
-					driver.Manage().Window.Maximize();
 					break;
 			}
+
+			driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
+			driver.Manage().Window.Maximize();
+			
 			return driver;
 		}
 	}

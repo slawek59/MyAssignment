@@ -2,12 +2,12 @@
 {
 	public class ExpectedValues
 	{
-		private const string EXPECTED_USERNAME_MISSING_MESSAGE = "Username is required";
-		private const string EXPECTED_PASSWORD_MISSING_MESSAGE = "Password is required";
-		private const string EXPECTED_TITLE = "Swag Labs";
+		private const string _expectedUsernameMissingMessage = "Username is required";
+		private const string _expectedPasswordMissingMessage = "Password is required";
+		private const string _expectedTitle = "Swag Labs";
 
-		public static string ExpectedUsernameMissingMessage { get { return EXPECTED_USERNAME_MISSING_MESSAGE; } }
-		public static string ExpectedPasswordMissingMessage { get { return EXPECTED_PASSWORD_MISSING_MESSAGE; } }
-		public static string ExpectedTitle { get { return EXPECTED_TITLE; } }
+		public static string ExpectedUsernameMissingMessage { get => _expectedUsernameMissingMessage; }
+		public static string ExpectedPasswordMissingMessage { get => _expectedPasswordMissingMessage; }
+		public static string ExpectedTitle { get => _expectedTitle; }
 	}
 }
